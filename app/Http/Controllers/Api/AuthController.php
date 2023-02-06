@@ -25,10 +25,8 @@ class AuthController extends Controller
 
     public function register(StoreUserRequest $request)
     {
-        $user = User::create($request->validated());
-        UserMeasurement::create([
-           'user_id' => $user->id,
-        ]);
+        $user = User::create($request->safe()->only(['name', 'email', 'password']));
+        UserMeasurement::create($request->safe()->only(['age', 'gender', 'height', 'weight']) + ['user_id' => $user->id]);
 
         return response()->json([
            'message' => 'You have been successfully registered!',

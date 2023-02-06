@@ -27,6 +27,10 @@ class StoreUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'age' => ['required', 'numeric', 'between:12,150'],
+            'gender' => ['required', 'in:male,female'],
+            'height' => ['required', 'numeric', 'between:120,300'],
+            'weight' => ['required', 'numeric'],
         ];
     }
 }
