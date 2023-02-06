@@ -2,7 +2,7 @@
 
 I built this API to gain deeper knowledge about Laravel-powered APIs and to track my personal fitness progress. Despite the abundance of fitness tracking apps, I wanted to create my own so I could learn more about APIs and customize it to my specific needs.
 
-I will use Laravel as my backend server.
+I plan to utilize Laravel as the backend server and the API for my frontend, which will be built using React.
 
 ## Requirements
 
