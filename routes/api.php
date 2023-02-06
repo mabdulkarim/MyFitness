@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ExerciseController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\WorkoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+
+Route::apiResource('exercises', ExerciseController::class)->only(['index', 'show']);
+Route::apiResource('users', UserController::class)->only(['index', 'show']);
+Route::apiResource('workouts', WorkoutController::class)->only(['index', 'show']);
+
+Route::group(['middleware' => ['auth:sanctum']], function() {
+    Route::apiResource('exercises', ExerciseController::class)->except(['index', 'show']);
+    Route::apiResource('users', UserController::class)->except(['index', 'show']);
+    Route::apiResource('workouts', WorkoutController::class)->except(['index', 'show']);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
