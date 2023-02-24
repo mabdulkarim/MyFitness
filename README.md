@@ -25,6 +25,3 @@ To create or manage exercises or workouts, authentication is required. Upon logg
 user credentials:
 - email = admin@admin.com
 - password = password
-
-## Database structure
-![image](https://user-images.githubusercontent.com/69695051/217008437-c41142dc-01dd-4ef3-820c-9b29a9db49a2.png)
