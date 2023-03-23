@@ -7,8 +7,6 @@ I plan to utilize Laravel as the backend server and the API for my frontend, whi
 ## Requirements
 
 - PHP 8.0+
-- Postman or other tools to make requests.
-- Composer
 
 ## Installation
 
