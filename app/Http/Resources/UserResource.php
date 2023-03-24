@@ -16,10 +16,14 @@ class UserResource extends JsonResource
     {
         return [
             'user' => [
+                'id' => $this->id,
                 'name' => $this->name,
+                'age' => $this->age,
+                'gender' => $this->gender,
+                'height' => $this->height,
                 'email' => $this->email,
             ],
-            'userIdentity' => new UserMeasurementResource($this->userMeasurement)
+            'userMeasurements' => UserMeasurementResource::collection($this->userMeasurements),
         ];
     }
 }
