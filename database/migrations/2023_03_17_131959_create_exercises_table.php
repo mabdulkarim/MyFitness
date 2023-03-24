@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('exercises', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('workout_id');
             $table->string('name');
             $table->longText('description')->nullable();
             $table->timestamps();
