@@ -11,10 +11,8 @@ class UserMeasurement extends Model
 
     protected $fillable = [
         'user_id',
-        'age',
-        'gender',
-        'height',
-        'weight'
+        'weight',
+        'body_fat_percentage',
     ];
 
     public function user()

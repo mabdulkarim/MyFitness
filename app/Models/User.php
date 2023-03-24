@@ -21,6 +21,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'age',
+        'gender',
+        'height',
         'email',
         'password',
     ];
@@ -51,18 +54,13 @@ class User extends Authenticatable
         );
     }
 
-    public function userMeasurement()
+    public function userMeasurements()
     {
-        return $this->hasOne(UserMeasurement::class);
+        return $this->hasMany(UserMeasurement::class);
     }
 
     public function workouts()
     {
-        return $this->belongsToMany(Workout::class);
-    }
-
-    public function exercises()
-    {
-        return $this->hasMany(Exercise::class);
+        return $this->hasMany(Workout::class);
     }
 }

@@ -4,24 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ExerciseUserWeight extends Model
+class ExerciseSet extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'exercise_id',
-        'weight'
+        'weight',
+        'sets',
+        'repetitions',
     ];
 
-    public function exercise()
+    /**
+     * @return BelongsTo
+     */
+    public function exercise(): BelongsTo
     {
         return $this->belongsTo(Exercise::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }
