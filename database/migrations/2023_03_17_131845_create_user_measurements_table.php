@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->float('weight', 8 , 2)->nullable();
-            $table->float('body_fat_percentage')->nullable();
+            $table->float('body_fat_percentage', 8, 2)->nullable();
             $table->timestamps();
         });
     }
