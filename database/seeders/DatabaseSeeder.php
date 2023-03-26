@@ -16,29 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         User::factory(10)->create();
-
-         $admin = User::factory()->create([
-             'name' => 'Admin',
-             'email' => 'admin@admin.com',
-         ]);
-
-         UserMeasurement::create([
-             'user_id' => $admin->id,
-             'weight' => 78.5,
-             'body_fat_percentage' => 17.8
-         ]);
-
-        UserMeasurement::create([
-            'user_id' => $admin->id,
-            'weight' => 76.4,
-            'body_fat_percentage' => 15.2
-        ]);
-
-//        $this->call([
-//           UserSeeder::class,
-//           WorkoutSeeder::class,
+        $this->call([
+           UserSeeder::class,
+           RolesPermissionsSeeder::class,
 //           UserMeasurementSeeder::class
-//        ]);
+        ]);
     }
 }
