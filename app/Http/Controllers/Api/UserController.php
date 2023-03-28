@@ -23,7 +23,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::with('userMeasurement')->get());
+        return UserResource::collection(User::with('userMeasurements')->get());
     }
 
     /**
@@ -48,8 +48,8 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        $user->update($request->safe()->only(['name', 'email', 'password']));
-        $user->userMeasurement()->update($request->safe()->only(['age', 'gender', 'height', 'weight']));
+        $user->update($request->safe()->only(['name', 'age', 'gender', 'height', 'email', 'password']));
+        $user->userMeasurements()->update($request->safe()->only(['weight', 'body_fat_percentage']));
 
         return new UserResource($user);
     }
