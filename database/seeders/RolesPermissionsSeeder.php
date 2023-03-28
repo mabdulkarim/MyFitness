@@ -16,17 +16,15 @@ class RolesPermissionsSeeder extends Seeder
 
     public array $userPermissions;
 
-
     public function __construct()
     {
         $this->userPermissions = [
             Permissions::CREATE_USER->value,
             Permissions::READ_USER->value,
             Permissions::UPDATE_USER->value,
-            Permissions::DELETE_USER,
+            Permissions::DELETE_USER->value,
         ];
     }
-
 
     /**
      * Run the database seeds.
