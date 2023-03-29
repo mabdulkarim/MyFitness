@@ -12,10 +12,12 @@ use Spatie\Permission\Models\Role;
 class RolesPermissionsSeeder extends Seeder
 {
     private array $roles = [
-      'admin' => 'admin',
+      'admin' => 'Super Admin',
     ];
 
-    public array $userPermissions;
+    private array $userPermissions;
+
+    private array $exercisePermissions;
 
     public function __construct()
     {
@@ -24,6 +26,11 @@ class RolesPermissionsSeeder extends Seeder
             Permissions::READ_USER->value,
             Permissions::UPDATE_USER->value,
             Permissions::DELETE_USER->value,
+        ];
+
+        $this->exercisePermissions = [
+            Permissions::UPDATE_EXERCISE->value,
+            Permissions::DELETE_EXERCISE->value,
         ];
     }
 
@@ -34,20 +41,22 @@ class RolesPermissionsSeeder extends Seeder
      */
     public function run()
     {
+        // Create roles
         $this->createRoles($this->roles);
-        $this->createPermissions($this->userPermissions);
-        $this->assignPermissions($this->roles['admin'], $this->userPermissions);
 
-        // Assigning the role admin to the admin
+        // Create permissions
+        $this->createPermissions($this->userPermissions, $this->exercisePermissions);
+
+        // Assigning the role Super Admin to the admin
         $admin = User::where('name', 'admin')->first();
         $admin->assignRole($this->roles['admin']);
     }
 
-    private function assignPermissions($role ,array ...$permissionLists)
+    private function assignPermissions(string $role, array ...$permissionLists)
     {
         foreach ($permissionLists as $permissionList) {
             $role = Role::where('name', $role)->first();
-            $role->syncPermissions($permissionList);
+            $role->givePermissionTo($permissionList);
         }
     }
 
