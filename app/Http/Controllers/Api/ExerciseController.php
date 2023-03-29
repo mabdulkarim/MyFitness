@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Exercices\StoreExerciseRequest;
 use App\Http\Requests\Exercices\UpdateExerciseRequest;
-use App\Http\Resources\Workout\ExerciseResource;
+use App\Http\Resources\Exercises\ExerciseResource;
 use App\Http\Traits\HttpResponses;
 use App\Models\Exercise;
 use Illuminate\Auth\Access\AuthorizationException;
