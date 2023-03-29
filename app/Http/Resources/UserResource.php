@@ -23,7 +23,7 @@ class UserResource extends JsonResource
                 'height' => $this->height,
                 'email' => $this->email,
             ],
-            'userMeasurements' => UserMeasurementResource::collection($this->userMeasurements),
+            'userMeasurements' => UserMeasurementResource::collection($this->whenLoaded('userMeasurements')),
         ];
     }
 }
