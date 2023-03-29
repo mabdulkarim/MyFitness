@@ -24,13 +24,48 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'age' => ['required', 'numeric', 'between:12,150'],
-            'gender' => ['required', 'in:male,female'],
-            'height' => ['required', 'numeric', 'between:120,300'],
-            'weight' => ['required', 'numeric'],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'unique:users,email',
+                'max:255',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+            ],
+            'age' => [
+                'required',
+                'numeric',
+                'between:16,120',
+            ],
+            'gender' => [
+                'required',
+                'string',
+                'in:male,female',
+            ],
+            'height' => [
+                'required',
+                'numeric',
+                'between:120,300',
+            ],
+            'weight' => [
+                'nullable',
+                'numeric',
+                'between:20, 500',
+            ],
+            'body_fat_percentage' => [
+                'nullable',
+                'numeric',
+            ],
         ];
     }
 }

@@ -21,13 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
-Route::apiResource('exercises', ExerciseController::class)->only(['index', 'show']);
-Route::apiResource('users', UserController::class)->only(['index', 'show']);
-Route::apiResource('workouts', WorkoutController::class)->only(['index', 'show']);
-
 Route::group(['middleware' => ['auth:sanctum']], function() {
-    Route::apiResource('exercises', ExerciseController::class)->except(['index', 'show']);
-    Route::apiResource('users', UserController::class)->except(['index', 'show']);
-    Route::apiResource('workouts', WorkoutController::class)->except(['index', 'show']);
+    Route::apiResource('users', UserController::class);
+    Route::post('user-measurements/{user}', [UserController::class, 'createUserMeasurement'])
+        ->name('user-measurements');
     Route::post('logout', [AuthController::class, 'logout']);
 });
