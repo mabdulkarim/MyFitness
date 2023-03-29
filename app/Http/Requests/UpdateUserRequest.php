@@ -51,13 +51,6 @@ class UpdateUserRequest extends FormRequest
                 'numeric',
                 'between:120,300',
             ],
-            'weight' => [
-                'numeric',
-                'between:20, 500',
-            ],
-            'body_fat_percentage' => [
-                'numeric',
-            ],
         ];
     }
 }
