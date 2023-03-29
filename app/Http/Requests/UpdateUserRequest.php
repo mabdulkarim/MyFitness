@@ -24,13 +24,40 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:128'],
-            'email' => ['required', 'email', 'unique:users,email,'.auth()->id()],
-            'password' => ['string', 'min:8'],
-            'age' => ['required'],
-            'gender' => ['required'],
-            'height' => ['required'],
-            'weight' => ['required']
+            'name' => [
+                'string',
+                'max:255',
+            ],
+            'email' => [
+                'string',
+                'email',
+                'unique:users,email,'.auth()->id(),
+                'max:255',
+            ],
+            'password' => [
+                'string',
+                'min:8',
+                'confirmed',
+            ],
+            'age' => [
+                'numeric',
+                'between:16,120',
+            ],
+            'gender' => [
+                'string',
+                'in:male,female',
+            ],
+            'height' => [
+                'numeric',
+                'between:120,300',
+            ],
+            'weight' => [
+                'numeric',
+                'between:20, 500',
+            ],
+            'body_fat_percentage' => [
+                'numeric',
+            ],
         ];
     }
 }
