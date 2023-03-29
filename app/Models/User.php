@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -55,13 +56,18 @@ class User extends Authenticatable
         );
     }
 
-    public function userMeasurements()
+    public function userMeasurements(): HasMany
     {
         return $this->hasMany(UserMeasurement::class);
     }
 
-    public function workouts()
+    public function workouts(): HasMany
     {
         return $this->hasMany(Workout::class);
+    }
+
+    public function exercises(): HasMany
+    {
+        return $this->hasMany(Exercise::class);
     }
 }
