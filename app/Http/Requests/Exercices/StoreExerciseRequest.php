@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Workout;
+namespace App\Http\Requests\Exercices;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ExerciseRequest extends FormRequest
+class StoreExerciseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
