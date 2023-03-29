@@ -21,7 +21,7 @@ class ExerciseController extends Controller
      *
      * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return ExerciseResource::collection(Exercise::all());
     }
@@ -32,7 +32,7 @@ class ExerciseController extends Controller
      * @param ExerciseRequest $request
      * @return ExerciseResource
      */
-    public function store(ExerciseRequest $request)
+    public function store(ExerciseRequest $request): ExerciseResource
     {
         $exercise = Exercise::create($request->validated() + ['user_id' => auth()->id()]);
 
@@ -45,7 +45,7 @@ class ExerciseController extends Controller
      * @param  Exercise $exercise
      * @return ExerciseResource
      */
-    public function show(Exercise $exercise)
+    public function show(Exercise $exercise): ExerciseResource
     {
         return new ExerciseResource($exercise);
     }
@@ -55,9 +55,9 @@ class ExerciseController extends Controller
      *
      * @param ExerciseRequest $request
      * @param  Exercise $exercise
-     * @return ExerciseResource|JsonResponse
+     * @return ExerciseResource
      */
-    public function update(ExerciseRequest $request, Exercise $exercise)
+    public function update(ExerciseRequest $request, Exercise $exercise): ExerciseResource
     {
         $this->authorize('update', $exercise);
 
