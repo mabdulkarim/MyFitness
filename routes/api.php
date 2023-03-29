@@ -23,5 +23,7 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('users', UserController::class);
+    Route::post('user-measurements/{user}', [UserController::class, 'createUserMeasurement'])
+        ->name('user-measurements');
     Route::post('logout', [AuthController::class, 'logout']);
 });
