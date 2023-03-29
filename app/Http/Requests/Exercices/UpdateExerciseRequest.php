@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Exercices;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserMeasurementRequest extends FormRequest
+class UpdateExerciseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,13 @@ class StoreUserMeasurementRequest extends FormRequest
     public function rules()
     {
         return [
-            'weight' => [
-                'required',
-                'numeric',
-                'between:20, 500',
+            'name' => [
+                'max:64',
+                'string',
             ],
-            'body_fat_percentage' => [
-                'numeric',
+            'description' => [
+                'string',
+                'max:255',
             ],
         ];
     }

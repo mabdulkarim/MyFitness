@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Workout\ExerciseRequest;
-use App\Http\Resources\Workout\ExerciseResource;
+use App\Http\Requests\Exercices\StoreExerciseRequest;
+use App\Http\Requests\Exercices\UpdateExerciseRequest;
+use App\Http\Resources\Exercises\ExerciseResource;
 use App\Http\Traits\HttpResponses;
 use App\Models\Exercise;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,7 +23,7 @@ class ExerciseController extends Controller
      *
      * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return ExerciseResource::collection(Exercise::all());
     }
@@ -29,10 +31,10 @@ class ExerciseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ExerciseRequest $request
+     * @param StoreExerciseRequest $request
      * @return ExerciseResource
      */
-    public function store(ExerciseRequest $request)
+    public function store(StoreExerciseRequest $request): ExerciseResource
     {
         $exercise = Exercise::create($request->validated() + ['user_id' => auth()->id()]);
 
@@ -45,7 +47,7 @@ class ExerciseController extends Controller
      * @param  Exercise $exercise
      * @return ExerciseResource
      */
-    public function show(Exercise $exercise)
+    public function show(Exercise $exercise): ExerciseResource
     {
         return new ExerciseResource($exercise);
     }
@@ -53,11 +55,12 @@ class ExerciseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param ExerciseRequest $request
-     * @param  Exercise $exercise
-     * @return ExerciseResource|JsonResponse
+     * @param UpdateExerciseRequest $request
+     * @param Exercise $exercise
+     * @return ExerciseResource
+     * @throws AuthorizationException
      */
-    public function update(ExerciseRequest $request, Exercise $exercise)
+    public function update(UpdateExerciseRequest $request, Exercise $exercise): ExerciseResource
     {
         $this->authorize('update', $exercise);
 

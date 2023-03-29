@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserMeasurementRequest;
-use App\Http\Requests\UpdateUserRequest;
-use App\Http\Resources\UserMeasurementResource;
-use App\Http\Resources\UserResource;
+use App\Http\Requests\Users\StoreUserMeasurementRequest;
+use App\Http\Requests\Users\UpdateUserRequest;
+use App\Http\Resources\Users\UserResource;
 use App\Http\Traits\HttpResponses;
 use App\Models\User;
 use App\Models\UserMeasurement;
