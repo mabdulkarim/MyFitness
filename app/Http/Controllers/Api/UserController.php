@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserMeasurementRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserMeasurementResource;
 use App\Http\Resources\UserResource;
 use App\Http\Traits\HttpResponses;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\UserMeasurement;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
@@ -20,6 +22,7 @@ class UserController extends Controller
      * Display a listing of the resource.
      *
      * @return AnonymousResourceCollection
+     * @throws AuthorizationException
      */
     public function index()
     {
@@ -31,10 +34,11 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  User $user
+     * @param User $user
      * @return JsonResponse|UserResource
+     * @throws AuthorizationException
      */
-    public function show(User $user)
+    public function show(User $user): UserResource|JsonResponse
     {
         $this->authorize('view', $user);
 
@@ -44,11 +48,12 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateUserRequest  $request
-     * @param  User $user
+     * @param UpdateUserRequest $request
+     * @param User $user
      * @return UserResource|JsonResponse
+     * @throws AuthorizationException
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): UserResource|JsonResponse
     {
         $this->authorize('update', $user);
 
@@ -60,16 +65,34 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  User $user
+     * @param User $user
      * @return JsonResponse
+     * @throws AuthorizationException
      */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         $this->authorize('delete', $user);
 
         $user->delete();
 
         return $this->success('', 'User deleted successfully!');
+    }
+
+    /**
+     * Create a user measurement for the user model
+     *
+     * @param StoreUserMeasurementRequest $request
+     * @param User $user
+     * @return UserMeasurementResource
+     * @throws AuthorizationException
+     */
+    public function createUserMeasurement(StoreUserMeasurementRequest $request, User $user): UserMeasurementResource
+    {
+        $this->authorize('createUserMeasurement', $user);
+
+        $userMeasurement = UserMeasurement::create($request->validated() + ['user_id' => auth()->id()]);
+
+        return new UserMeasurementResource(($userMeasurement));
     }
 
 }
