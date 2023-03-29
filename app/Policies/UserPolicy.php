@@ -13,10 +13,10 @@ class UserPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->can(Permissions::READ_USER->value);
     }
@@ -24,11 +24,11 @@ class UserPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param User $model
+     * @return bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, User $model): bool
     {
         return $user->can(Permissions::READ_USER->value) || $user->id === $model->id;
     }
@@ -36,11 +36,11 @@ class UserPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param User $model
+     * @return bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user, User $model): bool
     {
         return $user->can(Permissions::UPDATE_USER->value) || $user->id === $model->id;
     }
@@ -48,12 +48,24 @@ class UserPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param User $user
+     * @param User $model
+     * @return bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, User $model): bool
     {
         return $user->can(Permissions::DELETE_USER->value) || $user->id === $model->id;
+    }
+
+    /**
+     * Determine whether the user can create the user measurement model
+     *
+     * @param User $user
+     * @param User $model
+     * @return bool
+     */
+    public function createUserMeasurement(User $user, User $model): bool
+    {
+        return $user->id === $model->id;
     }
 }
