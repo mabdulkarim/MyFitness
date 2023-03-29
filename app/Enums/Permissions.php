@@ -11,4 +11,8 @@ Enum Permissions: string
     case UPDATE_USER = 'update users';
 
     case DELETE_USER = 'delete users';
+
+    case UPDATE_EXERCISE = 'update exercises';
+
+    case DELETE_EXERCISE = 'delete exercises';
 }
