@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\Permissions;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -36,16 +37,17 @@ class RolesPermissionsSeeder extends Seeder
         $this->createRoles($this->roles);
         $this->createPermissions($this->userPermissions);
         $this->assignPermissions($this->roles['admin'], $this->userPermissions);
+
+        // Assigning the role admin to the admin
+        $admin = User::where('name', 'admin')->first();
+        $admin->assignRole($this->roles['admin']);
     }
 
     private function assignPermissions($role ,array ...$permissionLists)
     {
         foreach ($permissionLists as $permissionList) {
-            foreach ($permissionList as $permission) {
-                Permission::where('name', $permission)
-                    ->first()
-                    ->assignRole($role);
-            }
+            $role = Role::where('name', $role)->first();
+            $role->syncPermissions($permissionList);
         }
     }
 
