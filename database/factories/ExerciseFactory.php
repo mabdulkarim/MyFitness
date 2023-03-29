@@ -18,6 +18,7 @@ class ExerciseFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => fake()->randomElement(User::pluck('id')),
             'name' => fake()->name(),
             'description' => fake()->realText(128),
         ];
