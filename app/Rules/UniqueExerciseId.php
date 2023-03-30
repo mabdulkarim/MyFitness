@@ -2,7 +2,6 @@
 
 namespace App\Rules;
 
-use App\Models\Exercise;
 use App\Models\Workout;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\InvokableRule;
