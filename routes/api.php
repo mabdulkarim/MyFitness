@@ -28,5 +28,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('user-measurements/{user}', [UserController::class, 'createUserMeasurement'])
         ->name('user-measurements');
 
+    Route::apiResource('workouts', WorkoutController::class);
     Route::apiResource('exercises', ExerciseController::class);
 });
