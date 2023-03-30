@@ -8,6 +8,7 @@ use App\Http\Requests\Workout\UpdateWorkoutRequest;
 use App\Http\Resources\Workout\WorkoutResource;
 use App\Http\Traits\HttpResponses;
 use App\Models\Workout;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class WorkoutController extends Controller
      *
      * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return WorkoutResource::collection(Workout::with('exercises')->get());
     }
@@ -33,19 +34,18 @@ class WorkoutController extends Controller
      * @param  StoreWorkoutRequest $request
      * @return WorkoutResource|JsonResponse
      */
-    public function store(StoreWorkoutRequest $request)
+    public function store(StoreWorkoutRequest $request): WorkoutResource|JsonResponse
     {
         try {
-            $workout = Workout::create($request->validated());
-            auth()->user()->workouts()->attach($workout);
+            $workout = Workout::create($request->validated() + ['user_id' => auth()->id()]);
 
-            if ($request->exists('exercises')){
-                $workout->exercises()->attach($request->input('exercises'));
-            }
+            $request->whenFilled('exercises', function (array $input) use ($workout) {
+                $workout->exercises()->sync($input);
+            });
 
             return new WorkoutResource($workout);
-        } catch(QueryException $e) {
-            return $this->error('The specified resource could not be found.', 404);
+        } catch (QueryException $e) {
+            return $this->error('One of the selected exercises could not be found.', 404);
         }
     }
 
@@ -55,7 +55,7 @@ class WorkoutController extends Controller
      * @param  Workout $workout
      * @return WorkoutResource
      */
-    public function show(Workout $workout)
+    public function show(Workout $workout): WorkoutResource
     {
         return new WorkoutResource($workout);
     }
@@ -63,34 +63,38 @@ class WorkoutController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateWorkoutRequest  $request
-     * @param  Workout $workout
-     * @return WorkoutResource
+     * @param UpdateWorkoutRequest $request
+     * @param Workout $workout
+     * @return WorkoutResource|JsonResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateWorkoutRequest $request, Workout $workout)
     {
         $this->authorize('update', $workout);
 
-        $workout->update($request->validated());
+        try {
+            $workout->update($request->validated());
 
-        return new WorkoutResource($workout);
+            $request->whenFilled('exercises', function (array $input) use ($workout) {
+                $workout->exercises()->attach($input);
+            });
+
+            return new WorkoutResource($workout);
+        } catch (QueryException $e) {
+            return $this->error('One of the selected exercises could not be found.', 404);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Workout $workout
+     * @param Workout $workout
      * @return JsonResponse
+     * @throws AuthorizationException
      */
-    public function destroy(Workout $workout)
+    public function destroy(Workout $workout): JsonResponse
     {
         $this->authorize('delete', $workout);
-
-        $exercices = $workout->exercises()->get();
-        $workout->exercises()->detach($exercices);
-
-        $users = $workout->users()->get();
-        $workout->users()->detach($users);
 
         $workout->delete();
 
