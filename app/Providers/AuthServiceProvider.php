@@ -5,8 +5,10 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Exercise;
 use App\Models\User;
+use App\Models\Workout;
 use App\Policies\ExercisePolicy;
 use App\Policies\UserPolicy;
+use App\Policies\WorkoutPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -20,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         User::class => UserPolicy::class,
         Exercise::class => ExercisePolicy::class,
+        Workout::class => WorkoutPolicy::class,
     ];
 
     /**

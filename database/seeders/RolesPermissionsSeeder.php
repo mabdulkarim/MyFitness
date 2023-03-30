@@ -16,8 +16,8 @@ class RolesPermissionsSeeder extends Seeder
     ];
 
     private array $userPermissions;
-
     private array $exercisePermissions;
+    private array $workoutPermissions;
 
     public function __construct()
     {
@@ -32,6 +32,11 @@ class RolesPermissionsSeeder extends Seeder
             Permissions::UPDATE_EXERCISE->value,
             Permissions::DELETE_EXERCISE->value,
         ];
+
+        $this->workoutPermissions = [
+            Permissions::UPDATE_WORKOUT->value,
+            Permissions::DELETE_WORKOUT->value,
+        ];
     }
 
     /**
@@ -45,7 +50,7 @@ class RolesPermissionsSeeder extends Seeder
         $this->createRoles($this->roles);
 
         // Create permissions
-        $this->createPermissions($this->userPermissions, $this->exercisePermissions);
+        $this->createPermissions($this->userPermissions, $this->exercisePermissions, $this->workoutPermissions);
 
         // Assigning the role Super Admin to the admin
         $admin = User::where('name', 'admin')->first();

@@ -15,4 +15,8 @@ Enum Permissions: string
     case UPDATE_EXERCISE = 'update exercises';
 
     case DELETE_EXERCISE = 'delete exercises';
+
+    case UPDATE_WORKOUT = 'update workouts';
+
+    case DELETE_WORKOUT = 'delete workouts';
 }
