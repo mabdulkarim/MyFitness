@@ -23,9 +23,8 @@ class UniqueExerciseId implements DataAwareRule, InvokableRule
     {
         $workout = Workout::where('id', $this->data['workout_id'])
             ->first()
-            ->whereHas('exercises', function ($query) use ($value) {
-                $query->where('exercise_id', $value);
-            })
+            ->exercises()
+            ->whereIn('exercise_id', $value)
             ->get();
 
         if ($workout->count() > 0) {
