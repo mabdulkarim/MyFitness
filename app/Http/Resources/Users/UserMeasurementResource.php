@@ -19,7 +19,6 @@ class UserMeasurementResource extends JsonResource
         return [
             'weight' => $this->weight,
             'body_fat_percentage' => $this->body_fat_percentage,
-            'created_at' => $this->created_at,
         ];
     }
 }

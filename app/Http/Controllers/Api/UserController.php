@@ -41,6 +41,8 @@ class UserController extends Controller
     {
         $this->authorize('view', $user);
 
+        $user->load('userMeasurements');
+
         return new UserResource($user);
     }
 
